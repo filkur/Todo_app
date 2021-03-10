@@ -4,8 +4,16 @@
 
 {% block body %}
 
+
     <div class="container">
         <article>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <header style="margin-top: 50px; margin-bottom: 30px;">
+                    <div class="alert alert-info">
+                        You are already logged in
+                    </div>
+                </header>
+            {% else %}
             <header style="margin-top: 50px; margin-bottom: 30px;">
                 <h1>Hi! Nice to see you again!</h1>
             </header>
@@ -36,6 +44,7 @@
                     Sign in
                 </button>
             </form>
+            {% endif %}
         </article>
 
     </div>

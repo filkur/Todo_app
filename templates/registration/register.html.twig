@@ -9,7 +9,15 @@
 
     <div class="container">
 
+
         <article>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <header style="margin-top: 50px; margin-bottom: 30px;">
+                <div class="alert alert-info">
+                    You are already logged in
+                </div>
+            </header>
+            {% else %}
             <header style="margin-top: 50px; margin-bottom: 30px;">
                 <h1>Join to us!</h1>
             </header>
@@ -24,6 +32,7 @@
             <button type="submit" class="btn btn-warning">Register</button>
             {{ form_end(registrationForm) }}
         </article>
+        {% endif %}
     </div>
 
 {% endblock %}
