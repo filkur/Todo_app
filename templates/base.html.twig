@@ -18,17 +18,37 @@
         {% endblock %}
     </head>
     <body class="bg-muted">
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">TodoApp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="font-style: italic; font-weight: 700; font-size: 30px;" >ToDoApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Features</a>
-            </div>
-
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="nav-item mr-3">
+                    <a class="btn btn-primary btn-md" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item mr-3">
+                    <a class="btn btn-primary btn-md" href="{{ path('app_login') }}">Log in</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="btn btn-warning btn-md" href="{{ path('app_register') }}">Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
         {% block body %}{% endblock %}
