@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Task;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,14 +32,14 @@ class CategoryController extends AbstractController
 
     /**
      * @Route ("/show/{id}", name="show")
-     * @param Task $task
+     * @param Category $category
      * @return Response
      */
-    public function show (Task $task){
+    public function show (Category $category){
 
         //create the show view
-        return $this-> render('post/show.html.twig', [
-            'task' => $task
+        return $this-> render('category/show.html.twig', [
+            'category' => $category
         ]);
     }
 
