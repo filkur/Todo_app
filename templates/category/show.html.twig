@@ -3,26 +3,31 @@
 {% block title %}created posts {% endblock %}
 
 {% block body %}
-    <h1>{{ category.name }}</h1>
-    <div class="container">
+    <div class="container" style="text-align: center;">
+        <h1 style="margin-top: 50px; margin-bottom: 50px;">{{ category.name }} category:</h1>
         <table class="table table-striped">
             <thead>
             <tr>
-                <td>ID</td>
-                <td>Title</td>
+                <td>Title:</td>
+                <td>Deadline</td>
+                <td>Is done?</td>
+                <td>Enter below to get more details</td>
             </tr>
             </thead>
             <tbody>
             {% for task in tasks %}
                 <tr>
                     <td>{{ task.title}}</td>
+                    <td>{{ task.deadline|date("Y/m/d")}}</td>
                     <td>
-                        <a href="#">
-                            {{ task.description }}
-                        </a>
+                        {% if task.done%}
+                            <p class="text-danger">Yes</p>
+                        {% else%}
+                            <p class="text-danger">No</p>
+                        {% endif %}
                     </td>
                     <td>
-                        <a class="text-danger" href="#">Delete</a>
+                        <a class="btn btn-warning" href="{{ path('task.show', {id: task.id}) }}">Show</a>
                     </td>
                 </tr>
             {% endfor %}
