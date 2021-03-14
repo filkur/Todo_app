@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,6 +34,19 @@ class TaskRepository extends ServiceEntityRepository
             ->setParameter('categoryId', $categoryId)
             ->setParameter('userId', $userId)
             ->getResult();
+    }
+
+    public function findById($id){
+        try {
+            return $this->getEntityManager()
+                ->createQuery(
+                    'SELECT t FROM App\Entity\Task t WHERE t.id = :id'
+                )
+                ->setParameter('id', $id)
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            $e->getMessage();
+        }
     }
 
     // /**
