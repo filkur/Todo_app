@@ -10,7 +10,6 @@
             <tr>
                 <td>Title:</td>
                 <td>Deadline</td>
-                <td>Is done?</td>
                 <td>Enter below to get more details</td>
             </tr>
             </thead>
@@ -20,14 +19,7 @@
                     <td>{{ task.title}}</td>
                     <td>{{ task.deadline|date("Y/m/d")}}</td>
                     <td>
-                        {% if task.done%}
-                            <p class="text-danger">Yes</p>
-                        {% else%}
-                            <p class="text-danger">No</p>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a class="btn btn-warning" href="{{ path('task.show', {id: task.id}) }}">Show</a>
+                        <a class="btn btn-primary" href="{{ path('task.show', {id: task.id}) }}">Show</a>
                     </td>
                 </tr>
             {% endfor %}
