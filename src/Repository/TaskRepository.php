@@ -19,6 +19,22 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
+    /**
+     * @param $categoryId
+     * @param $userId
+     * @return Task[] Returns an array of Task object
+     */
+    public function findAllByCategoryIdAndUserId($categoryId, $userId){
+
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT t FROM App\Entity\Task t WHERE t.category = :categoryId AND t.user = :userId'
+            )
+            ->setParameter('categoryId', $categoryId)
+            ->setParameter('userId', $userId)
+            ->getResult();
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */

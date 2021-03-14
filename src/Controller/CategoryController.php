@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Task;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,14 +35,28 @@ class CategoryController extends AbstractController
     /**
      * @Route ("/show/{id}", name="show")
      * @param Category $category
+     * @param TaskRepository $taskRepository
      * @return Response
      */
-    public function show (Category $category){
+    public function show (Category $category,TaskRepository $taskRepository){
 
+        $categoryId = $category->getId();
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getUsername();
+
+        $userId = $user->getId();
+
+        $tasks = $taskRepository->findAllByCategoryIdAndUserId($categoryId, $userId);
+        //dump($tasks);
         //create the show view
+
         return $this-> render('category/show.html.twig', [
-            'category' => $category
+            'category' => $category,
+            'tasks' => $tasks,
+            'user' => $user
         ]);
+
     }
 
 }
