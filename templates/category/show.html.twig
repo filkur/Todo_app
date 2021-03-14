@@ -4,4 +4,29 @@
 
 {% block body %}
     <h1>{{ category.name }}</h1>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title}}</td>
+                    <td>
+                        <a href="#">
+                            {{ task.description }}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
