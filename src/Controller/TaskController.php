@@ -59,9 +59,9 @@ class TaskController extends AbstractController
 
        $taskId = $task->getId();
 
-       $task = $taskRepository->findBy(array('id' => $taskId)
+       //$task = $taskRepository->findBy(array('id' => $taskId)
 
-       );
+        $task = $taskRepository->findById($taskId);
 
         return $this-> render('task/show.html.twig', [
             'task' => $task,
