@@ -11,24 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/task", name="task")
+ * @Route("/task", name="task.")
  * Class TaskController
  * @package App\Controller
  */
 class TaskController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     * @param TaskRepository $taskRepository
-     * @return Response
-     */
-    public function index(TaskRepository $taskRepository): Response
-    {
-        $tasks = $taskRepository->findAll();
-        return $this->render('task/index.html.twig', [
-            'tasks' => $tasks,
-        ]);
-    }
 
     /**
      * @Route("/create", name="create_task")
@@ -59,5 +47,25 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route ("/show/{id}", name="show")
+     * @param Task $task
+     * @param TaskRepository $taskRepository
+     * @return Response
+     */
+    public function show (Task $task,TaskRepository $taskRepository){
+
+       $taskId = $task->getId();
+
+       $task = $taskRepository->findBy(array('id' => $taskId)
+
+       );
+
+        return $this-> render('task/show.html.twig', [
+            'task' => $task,
+        ]);
+
     }
 }
