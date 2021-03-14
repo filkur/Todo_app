@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}created posts {% endblock %}
+
+{% block body %}
+    <div class="container" style="text-align: center;">
+        <h1 style="margin-top: 50px; margin-bottom: 50px;">Details about task:</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Title:</td>
+                <td>Description:</td>
+                <td>Deadline</td>
+                <td>Is done?</td>
+                <td style="color: white">-</td>
+                <td style="color: white">-</td>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ task.title}}</td>
+                    <td>{{ task.description}}</td>
+                    <td>{{ task.deadline|date("Y/m/d")}}</td>
+                    <td>
+                        {% if task.done%}
+                            <p class="text-danger">Yes</p>
+                        {% else%}
+                            <p class="text-danger">No</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" href="#">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
