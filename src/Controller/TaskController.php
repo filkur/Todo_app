@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -41,7 +42,7 @@ class TaskController extends AbstractController
 
             return $this->redirect($this->generateUrl('index'));
         }
-        
+
         return $this->render(
             'task/create.html.twig',
             [
