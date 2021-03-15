@@ -97,7 +97,7 @@ class Task
 
     public function setDeadline(\DateTimeInterface $deadline): self
     {
-        $this -> deadline = $deadline;
+        $this->deadline = $deadline;
 
         return $this;
     }

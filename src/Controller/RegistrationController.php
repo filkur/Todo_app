@@ -16,14 +16,13 @@ class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param LoginFormAuthenticator $authenticator
-     * @param GuardAuthenticatorHandler $guardHandler
-     * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        LoginFormAuthenticator $authenticator,
+        GuardAuthenticatorHandler $guardHandler
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -33,13 +32,17 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('password')->getData()
+                    $form->get('password')
+                         ->getData()
                 )
             );
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()
+                                  ->getManager()
+            ;
             $entityManager->persist($user);
             $entityManager->flush();
+
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -48,14 +51,14 @@ class RegistrationController extends AbstractController
                 $authenticator, // authenticator whose onAuthenticationSuccess you want to use
                 'main'          // the name of your firewall in security.yaml
             );
-
             //return $this->redirectToRoute('main');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        return $this->render(
+            'registration/register.html.twig',
+            [
+                'registrationForm' => $form->createView(),
+            ]
+        );
     }
-
-
 }

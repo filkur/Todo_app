@@ -14,36 +14,37 @@
                     </div>
                 </header>
             {% else %}
-            <header style="margin-top: 50px; margin-bottom: 30px;">
-                <h1>Hi! Nice to see you again!</h1>
-            </header>
+                <header style="margin-top: 50px; margin-bottom: 30px;">
+                    <h1>Hi! Nice to see you again!</h1>
+                </header>
 
-            <form method="post">
+                <form method="post">
 
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
+                    {% if error %}
+                        <div
+                            class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                {% endif %}
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
 
-                <label for="inputUsername">Username</label>
-                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
-                <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    <label for="inputUsername">Username</label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                           class="form-control" required autofocus>
+                    <label for="inputPassword">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" required>
 
-                <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
 
-
-                <button class="btn btn-md btn-primary mt-4" type="submit">
-                    Sign in
-                </button>
-            </form>
+                    <button class="btn btn-md btn-primary mt-4" type="submit">
+                        Sign in
+                    </button>
+                </form>
             {% endif %}
         </article>
 
@@ -52,14 +53,14 @@
 
 
     {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+    See https://symfony.com/doc/current/security/remember_me.html
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" name="_remember_me"> Remember me
+        </label>
+    </div>
     #}
 
 

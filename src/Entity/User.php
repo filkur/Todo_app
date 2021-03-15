@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @DoctrineAssert\UniqueEntity(fields = "username", message="Aaccount with this username already exists")
@@ -83,7 +84,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -117,7 +118,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -157,7 +158,7 @@ class User implements UserInterface
 
     public function addTask(Task $task): self
     {
-        if (!$this->tasks->contains($task)) {
+        if (! $this->tasks->contains($task)) {
             $this->tasks[] = $task;
             $task->setUser($this);
         }

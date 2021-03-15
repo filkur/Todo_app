@@ -61,7 +61,7 @@ class Category
 
     public function addTask(Task $task): self
     {
-        if (!$this->tasks->contains($task)) {
+        if (! $this->tasks->contains($task)) {
             $this->tasks[] = $task;
             $task->setCategory($this);
         }
@@ -81,7 +81,8 @@ class Category
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->name;
     }
 }

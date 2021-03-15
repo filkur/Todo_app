@@ -13,27 +13,27 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/task", name="task_")
  * Class TaskController
+ *
  * @package App\Controller
  */
 class TaskController extends AbstractController
 {
-
     /**
      * @Route("/create", name="create_task")
-     * @param Request $request
-     * @return Response
      */
-    public function create(Request $request) {
+    public function create(Request $request): Response
+    {
         $task = new Task();
 
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted()) {
             //entity manager
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()
+                       ->getManager()
+            ;
             $task->setUser($this->getUser());
             $task->setDone(false);
             $em->persist($task);
@@ -41,31 +41,31 @@ class TaskController extends AbstractController
 
             return $this->redirect($this->generateUrl('index'));
         }
-
-        //return a response
-        //return new Response('Post was created');
-        return $this->render('task/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        
+        return $this->render(
+            'task/create.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
      * @Route ("/show/{id}", name="show")
-     * @param Task $task
-     * @param TaskRepository $taskRepository
-     * @return Response
      */
-    public function show (Task $task,TaskRepository $taskRepository){
+    public function show(Task $task, TaskRepository $taskRepository): Response
+    {
+        $taskId = $task->getId();
 
-       $taskId = $task->getId();
-
-       //$task = $taskRepository->findBy(array('id' => $taskId)
+        //$task = $taskRepository->findBy(array('id' => $taskId)
 
         $task = $taskRepository->findById($taskId);
 
-        return $this-> render('task/show.html.twig', [
-            'task' => $task,
-        ]);
-
+        return $this->render(
+            'task/show.html.twig',
+            [
+                'task' => $task,
+            ]
+        );
     }
 }

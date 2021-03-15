@@ -19,21 +19,31 @@ class TaskType extends AbstractType
             ->add('description')
             //->add('done')
             ->add('deadline')
-            ->add('category', EntityType::class, [
-                'class' => Category::class
-            ])
-            ->add('save', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'class' => Category::class,
                 ]
-            ])
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'attr' => [
+                        'class' => 'btn btn-primary',
+                    ],
+                ]
+            )
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Task::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Task::class,
+            ]
+        );
     }
 }

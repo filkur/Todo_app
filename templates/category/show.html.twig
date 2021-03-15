@@ -16,8 +16,8 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
-                    <td>{{ task.title}}</td>
-                    <td>{{ task.deadline|date("Y/m/d")}}</td>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.deadline|date("Y/m/d") }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ path('task_show', {id: task.id}) }}">Show</a>
                     </td>
