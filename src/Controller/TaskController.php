@@ -40,7 +40,7 @@ class TaskController extends AbstractController
             $em->persist($task);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('index'));
+            return $this->redirect($this->generateUrl('category_index'));
         }
 
         return $this->render(
