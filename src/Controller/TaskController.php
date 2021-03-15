@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/task", name="task.")
+ * @Route("/task", name="task_")
  * Class TaskController
  * @package App\Controller
  */

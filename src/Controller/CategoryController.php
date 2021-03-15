@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category", name="category.")
+ * @Route("/category", name="category_")
  * Class CategoryController
  * @package App\Controller
  */
