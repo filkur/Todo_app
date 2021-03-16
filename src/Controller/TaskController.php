@@ -58,8 +58,6 @@ class TaskController extends AbstractController
     {
         $taskId = $task->getId();
 
-        //$task = $taskRepository->findBy(array('id' => $taskId)
-
         $task = $taskRepository->findById($taskId);
 
         return $this->render(
@@ -67,6 +65,29 @@ class TaskController extends AbstractController
             [
                 'task' => $task,
             ]
+        );
+    }
+
+    /**
+     * @Route ("/delete/{id}", name="delete")
+     */
+    public function remove(Task $task): Response
+    {
+        $em = $this->getDoctrine()
+                   ->getManager()
+        ;
+
+        $em->remove($task);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            'Task was removed'
+        );
+
+        return $this->redirect(
+            $this->generateUrl(
+                'category_index'
+            )
         );
     }
 }

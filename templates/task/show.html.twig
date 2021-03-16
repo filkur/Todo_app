@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}created posts {% endblock %}
+{% block title %}Todo-App! {% endblock %}
 
 {% block body %}
     <div class="container" style="text-align: center;">
@@ -32,7 +32,7 @@
                     <a class="btn btn-warning" href="#">Edit</a>
                 </td>
                 <td>
-                    <a class="btn btn-danger" href="#">Delete</a>
+                    <a class="btn btn-danger" href="{{ path('task_delete', {id: task.id}) }}">Delete</a>
                 </td>
             </tr>
             </tbody>
