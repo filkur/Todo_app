@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,5 +90,30 @@ class TaskController extends AbstractController
                 'category_index'
             )
         );
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function update(Task $task, Request $request, EntityManagerInterface $em): Response
+    {
+
+        $form = $this->createForm(TaskType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            /** @var Task $task */
+            $task = $form->getData();
+            $task->setUser($this->getUser());
+            $em->persist($task);
+            $em->flush();
+            $this->addFlash('success', 'Task Updated!');
+            return $this->redirectToRoute('task_edit', [
+                'id' => $task->getId(),
+            ]);
+        }
+        return $this->render('task/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
     }
 }
