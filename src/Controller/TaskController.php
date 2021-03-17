@@ -95,20 +95,26 @@ class TaskController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update(Task $task, Request $request, EntityManagerInterface $em): Response
+    public function update( Task $task, Request $request): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        //$task = $em->getRepository(Task::class)->find($id);
 
         $form = $this->createForm(TaskType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            /** @var Task $task */
-            $task = $form->getData();
+            $taskToUpdate = $form->getData();
+
             $task->setUser($this->getUser());
-            $em->persist($task);
+            $task->setTitle($taskToUpdate->getTitle());
+            $task->setDescription($taskToUpdate->getDescription());
+            $task->setCategory($taskToUpdate->getCategory());
+            $task->setDeadline($taskToUpdate->getDeadline());
+
             $em->flush();
             $this->addFlash('success', 'Task Updated!');
             return $this->redirectToRoute('task_edit', [
-                'id' => $task->getId(),
+                'id' => $taskToUpdate->getId(),
             ]);
         }
         return $this->render('task/edit.html.twig', [
@@ -116,4 +122,5 @@ class TaskController extends AbstractController
         ]);
 
     }
+
 }
