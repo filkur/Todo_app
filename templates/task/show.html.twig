@@ -11,8 +11,7 @@
                 <td>Title:</td>
                 <td>Description:</td>
                 <td>Deadline</td>
-                <td>Is done?</td>
-                <td style="color: white">-</td>
+                <td>Set:</td>
                 <td style="color: white">-</td>
                 <td style="color: white">-</td>
             </tr>
@@ -22,13 +21,7 @@
                 <td>{{ task.title }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.deadline|date("Y/m/d") }}</td>
-                <td>
-                    {% if task.done %}
-                        <p class="text-primary">Yes</p>
-                    {% else %}
-                        <p class="text-danger">No</p>
-                    {% endif %}
-                </td>
+
                 <td>
                     {{ form(form) }}
                 </td>
