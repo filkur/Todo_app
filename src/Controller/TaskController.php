@@ -8,6 +8,7 @@ use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,16 +56,51 @@ class TaskController extends AbstractController
     /**
      * @Route ("/show/{id}", name="show")
      */
-    public function show(Task $task, TaskRepository $taskRepository): Response
+    public function show(Task $task, TaskRepository $taskRepository, Request $request): Response
     {
+        $form = $this->createFormBuilder()
+                     ->add(
+                         'setDone',
+                         SubmitType::class,
+                         [
+                             'label' => 'Done/Undone',
+                         ]
+                     )
+                     ->getForm()
+        ;
+
         $taskId = $task->getId();
 
         $task = $taskRepository->findById($taskId);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($task->isDone()) {
+                $task->setDone(false);
+            } else {
+                $task->setDone(true);
+            }
+
+            $em = $this->getDoctrine()
+                       ->getManager()
+            ;
+
+            $em->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'task_show',
+                    ['id' => $taskId]
+                )
+            );
+        }
 
         return $this->render(
             'task/show.html.twig',
             [
                 'task' => $task,
+                'form' => $form->createView(),
             ]
         );
     }

@@ -24,13 +24,13 @@
                 <td>{{ task.deadline|date("Y/m/d") }}</td>
                 <td>
                     {% if task.done %}
-                        <p class="text-danger">Yes</p>
+                        <p class="text-primary">Yes</p>
                     {% else %}
                         <p class="text-danger">No</p>
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="#">Set Done</a>
+                    {{ form(form) }}
                 </td>
                 <td>
                     <a class="btn btn-warning" href="{{ path('task_edit', {id: task.id}) }}">Edit</a>
