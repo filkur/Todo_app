@@ -32,11 +32,15 @@ class TaskController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             //entity manager
             $em = $this->getDoctrine()
                        ->getManager()
             ;
+            if ($task->getDeadline() < new \DateTime()){
+                throw new \Exception("Wrong deadline date");
+
+            }
             $task->setUser($this->getUser());
             $task->setDone(false);
             $em->persist($task);
@@ -59,8 +63,7 @@ class TaskController extends AbstractController
     public function show(Task $task, TaskRepository $taskRepository, Request $request): Response
     {
         $isDone = $task->isDone();
-        if($isDone)
-        {
+        if ($isDone) {
             $form = $this->createFormBuilder()
                          ->add(
                              'setDone',
@@ -71,8 +74,7 @@ class TaskController extends AbstractController
                          )
                          ->getForm()
             ;
-        }
-        else {
+        } else {
             $form = $this->createFormBuilder()
                          ->add(
                              'setDone',
@@ -84,7 +86,6 @@ class TaskController extends AbstractController
                          ->getForm()
             ;
         }
-
 
         $taskId = $task->getId();
 
@@ -108,7 +109,10 @@ class TaskController extends AbstractController
             return $this->redirect(
                 $this->generateUrl(
                     'category_show',
-                    ['id' => $task->getCategory()->getId()]
+                    [
+                        'id' => $task->getCategory()
+                                     ->getId(),
+                    ]
                 )
             );
         }
