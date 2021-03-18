@@ -58,16 +58,33 @@ class TaskController extends AbstractController
      */
     public function show(Task $task, TaskRepository $taskRepository, Request $request): Response
     {
-        $form = $this->createFormBuilder()
-                     ->add(
-                         'setDone',
-                         SubmitType::class,
-                         [
-                             'label' => 'Done/Undone',
-                         ]
-                     )
-                     ->getForm()
-        ;
+        $isDone = $task->isDone();
+        if($isDone)
+        {
+            $form = $this->createFormBuilder()
+                         ->add(
+                             'setDone',
+                             SubmitType::class,
+                             [
+                                 'label' => 'Undone',
+                             ]
+                         )
+                         ->getForm()
+            ;
+        }
+        else {
+            $form = $this->createFormBuilder()
+                         ->add(
+                             'setDone',
+                             SubmitType::class,
+                             [
+                                 'label' => 'Done',
+                             ]
+                         )
+                         ->getForm()
+            ;
+        }
+
 
         $taskId = $task->getId();
 
@@ -90,8 +107,8 @@ class TaskController extends AbstractController
 
             return $this->redirect(
                 $this->generateUrl(
-                    'task_show',
-                    ['id' => $taskId]
+                    'category_show',
+                    ['id' => $task->getCategory()->getId()]
                 )
             );
         }
