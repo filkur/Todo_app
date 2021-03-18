@@ -95,10 +95,11 @@ class TaskController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update( Task $task, Request $request): Response
+    public function update(Task $task, Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        //$task = $em->getRepository(Task::class)->find($id);
+        $em = $this->getDoctrine()
+                   ->getManager()
+        ;
 
         $form = $this->createForm(TaskType::class);
         $form->handleRequest($request);
@@ -113,14 +114,19 @@ class TaskController extends AbstractController
 
             $em->flush();
             $this->addFlash('success', 'Task Updated!');
-            return $this->redirectToRoute('task_edit', [
-                'id' => $taskToUpdate->getId(),
-            ]);
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'category_index'
+                )
+            );
         }
-        return $this->render('task/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
 
+        return $this->render(
+            'task/edit.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
-
 }
