@@ -19,7 +19,6 @@ class TaskType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            //->add('done')
             ->add('deadline')
             ->add(
                 'category',
@@ -28,10 +27,6 @@ class TaskType extends AbstractType
                     'class' => Category::class,
                 ]
             )
-            ->add('done', CheckboxType::class, [
-                'label' => 'Is task done?',
-                'required' => false,
-            ])
             ->add(
                 'save',
                 SubmitType::class,
