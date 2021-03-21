@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as TaskAssert;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -35,6 +36,7 @@ class Task
 
     /**
      * @ORM\Column(type="date")
+     * @TaskAssert\DeadlineData
      */
     private $deadline;
 
