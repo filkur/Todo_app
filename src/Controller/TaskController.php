@@ -157,7 +157,7 @@ class TaskController extends AbstractController
 
         $form = $this->createForm(TaskType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taskToUpdate = $form->getData();
 
             $task->setUser($this->getUser());
@@ -165,6 +165,7 @@ class TaskController extends AbstractController
             $task->setDescription($taskToUpdate->getDescription());
             $task->setCategory($taskToUpdate->getCategory());
             $task->setDeadline($taskToUpdate->getDeadline());
+
 
             $em->flush();
             $this->addFlash('success', 'Task Updated!');
