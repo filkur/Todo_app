@@ -37,10 +37,7 @@ class TaskController extends AbstractController
             $em = $this->getDoctrine()
                        ->getManager()
             ;
-            if ($task->getDeadline() < new \DateTime()){
-                throw new \Exception("Wrong deadline date");
 
-            }
             $task->setUser($this->getUser());
             $task->setDone(false);
             $em->persist($task);
