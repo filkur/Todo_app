@@ -19,6 +19,13 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'class' => Category::class
+                ]
+            )
             ->add('title')
             ->add('description')
             ->add('deadline', DateType::class, [
@@ -27,13 +34,6 @@ class TaskType extends AbstractType
                     'min' => ( new \DateTime() )->format('m-d-Y')
                     ],
             ])
-            ->add(
-                'category',
-                EntityType::class,
-                [
-                    'class' => Category::class,
-                ]
-            )
             ->add(
                 'save',
                 SubmitType::class,
