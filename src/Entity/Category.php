@@ -30,6 +30,11 @@ class Category
      */
     private $tasks;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -85,5 +90,17 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
