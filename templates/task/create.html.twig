@@ -4,6 +4,12 @@
 
 {% block body %}
     <div class="container">
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.category) }}
+        <a class="btn btn-warning btn-md mb-4" href="{{ path('category_create_category')}}">Add new Category</a>
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.deadline) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
