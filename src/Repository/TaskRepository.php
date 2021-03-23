@@ -24,29 +24,53 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * @param $categoryId
      * @param $userId
+     *
      * @return Task[] Returns an array of Task object
      */
-    public function findAllByCategoryIdAndUserId($categoryId, $userId){
-
+    public function findAllByCategoryIdAndUserId($categoryId, $userId)
+    {
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT t FROM App\Entity\Task t WHERE t.category = :categoryId AND t.user = :userId'
-            )
-            ->setParameter('categoryId', $categoryId)
-            ->setParameter('userId', $userId)
-            ->getResult();
+                    ->createQuery(
+                        'SELECT t FROM App\Entity\Task t WHERE t.category = :categoryId AND t.user = :userId'
+                    )
+                    ->setParameter('categoryId', $categoryId)
+                    ->setParameter('userId', $userId)
+                    ->getResult()
+            ;
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         try {
             return $this->getEntityManager()
-                ->createQuery(
-                    'SELECT t FROM App\Entity\Task t WHERE t.id = :id'
-                )
-                ->setParameter('id', $id)
-                ->getOneOrNullResult();
+                        ->createQuery(
+                            'SELECT t FROM App\Entity\Task t WHERE t.id = :id'
+                        )
+                        ->setParameter('id', $id)
+                        ->getOneOrNullResult()
+                ;
         } catch (NonUniqueResultException $e) {
             $e->getMessage();
+        }
+    }
+
+    public function findByLongestDeadline($categoryID, $userId)
+    {
+        try {
+            return $this->getEntityManager()
+                        ->createQuery(
+                            "SELECT 
+                            t FROM App\Entity\Task 
+                            WHERE TO_CHAR(t.deadline, 'yyyy-dd-mm') IS = (
+                                SELECT MAX(t.deadline) 
+                                WHERE t.category = :categoryId 
+                                AND t.user = :userId 
+                                FROM App\Entity\Task
+                            )"
+                        )
+                        ->getOneOrNullResult()
+                ;
+        } catch (NonUniqueResultException $e) {
         }
     }
 

@@ -166,7 +166,6 @@ class TaskController extends AbstractController
             $task->setCategory($taskToUpdate->getCategory());
             $task->setDeadline($taskToUpdate->getDeadline());
 
-
             $em->flush();
             $this->addFlash('success', 'Task Updated!');
 

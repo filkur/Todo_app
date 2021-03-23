@@ -20,6 +20,16 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findByUserId(int $userId)
+    {
+        return $this->getEntityManager()
+                    ->createQuery(
+                        'SELECT c FROM App\Entity\Category c WHERE c.user = :userId'
+                    )
+                    ->setParameter('userId', $userId)
+                    ->getResult()
+            ;
+    }
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

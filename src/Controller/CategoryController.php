@@ -29,7 +29,12 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
+        $user = $this->get('security.token_storage')
+                     ->getToken()
+                     ->getUser()
+        ;
+        $userId = $user->getId();
+        $categories = $categoryRepository->findByUserId($userId);
 
         return $this->render(
             'category/index.html.twig',
@@ -42,7 +47,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/create", name="create_category")
      */
-    public function create(Request $request):Response
+    public function create(Request $request): Response
     {
         $category = new Category();
 
@@ -69,7 +74,6 @@ class CategoryController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
-
     }
 
     /**
