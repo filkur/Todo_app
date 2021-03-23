@@ -5,6 +5,12 @@
 {% block body %}
     <div class="container" style="text-align: center;">
         <h1 style="margin-top: 50px; margin-bottom: 50px;">{{ category.name }} category:</h1>
+        {% if tasks is empty %}
+        <div class="alert alert-info">
+            You're list of tasks is empty. Click below to create task!
+        </div>
+        <a class="btn btn-warning" href="{{ path('task_create_task') }}">Add task</a>
+        {% else %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -33,5 +39,6 @@
             {% endfor %}
             </tbody>
         </table>
+        {% endif %}
     </div>
 {% endblock %}

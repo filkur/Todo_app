@@ -9,8 +9,14 @@
         </div>
     {% endfor %}
 
-    <div class="container">
+    <div class="container" style="text-align: center">
         <h1 style="margin-top: 50px; margin-bottom: 50px;">List of you're categories:</h1>
+        {% if categories is empty %}
+        <div class="alert alert-info">
+            You're list of category is empty. Click below to create category!
+        </div>
+        <a class="btn btn-warning" href="{{ path('category_create_category') }}">Add category</a>
+        {% else %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -19,18 +25,19 @@
             </tr>
             </thead>
             <tbody>
-            {% for category in categories %}
-                <tr>
-                    <td>
-                        <a href="{{ path('category_show', {id: category.id}) }}">
-                            {{ category.name }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ category.createdAt|date('Y/m/d') }}
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for category in categories %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('category_show', {id: category.id}) }}">
+                                {{ category.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ category.createdAt|date('Y/m/d') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
