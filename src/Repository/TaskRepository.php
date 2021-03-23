@@ -54,25 +54,6 @@ class TaskRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByLongestDeadline($categoryID, $userId)
-    {
-        try {
-            return $this->getEntityManager()
-                        ->createQuery(
-                            "SELECT 
-                            t FROM App\Entity\Task 
-                            WHERE TO_CHAR(t.deadline, 'yyyy-dd-mm') IS = (
-                                SELECT MAX(t.deadline) 
-                                WHERE t.category = :categoryId 
-                                AND t.user = :userId 
-                                FROM App\Entity\Task
-                            )"
-                        )
-                        ->getOneOrNullResult()
-                ;
-        } catch (NonUniqueResultException $e) {
-        }
-    }
 
     // /**
     //  * @return Task[] Returns an array of Task objects
