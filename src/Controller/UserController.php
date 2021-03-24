@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Cassandra\Type\UserType;
+use App\Form\RegistrationFormType;
+use App\Form\UserUpdateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,8 @@ class UserController extends AbstractController
                    ->getManager()
         ;
 
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(UserUpdateType::class);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -38,7 +40,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/index.html.twig',
+            'user/edit.html.twig',
             [
                 'form' => $form->createView(),
             ]
