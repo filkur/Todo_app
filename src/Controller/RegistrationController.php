@@ -36,7 +36,8 @@ class RegistrationController extends AbstractController
                     $form->get('password')
                          ->getData()
                 )
-            );
+            )
+            ;
 
             $entityManager = $this->getDoctrine()
                                   ->getManager()
