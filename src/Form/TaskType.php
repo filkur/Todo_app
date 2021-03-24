@@ -23,17 +23,21 @@ class TaskType extends AbstractType
                 'category',
                 EntityType::class,
                 [
-                    'class' => Category::class
+                    'class' => Category::class,
                 ]
             )
             ->add('title')
             ->add('description')
-            ->add('deadline', DateType::class, [
-                'data' => new \DateTime(),
-                'attr' => [
-                    'min' => ( new \DateTime() )->format('m-d-Y')
+            ->add(
+                'deadline',
+                DateType::class,
+                [
+                    'data' => new \DateTime(),
+                    'attr' => [
+                        'min' => (new \DateTime())->format('m-d-Y'),
                     ],
-            ])
+                ]
+            )
             ->add(
                 'save',
                 SubmitType::class,
