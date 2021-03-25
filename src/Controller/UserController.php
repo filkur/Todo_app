@@ -27,7 +27,22 @@ class UserController extends AbstractController
         $form = $this->createForm(UserUpdateType::class);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->get('Remove')
+                 ->isSubmitted()) {
+            return $this->redirect(
+                $this->generateUrl(
+                    'user_delete',
+                    [
+                        'id' => $this->getUser()
+                                     ->getId(),
+                    ]
+                )
+            );
+        }
+
+        if ($form->get('Update')
+                 ->isSubmitted()) {
             $userToUpdate = $form->getData();
 
             $user->setUsername($userToUpdate->getUsername());
@@ -48,6 +63,28 @@ class UserController extends AbstractController
             [
                 'form' => $form->createView(),
             ]
+        );
+    }
+
+    /**
+     * @Route ("/delete/{id}", name="delete")
+     */
+    public function remove(User $user): Response
+    {
+        $em = $this->getDoctrine()
+                   ->getManager()
+        ;
+        $em->remove($user);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            'Profile removed. We will miss you...'
+        );
+
+        return $this->redirect(
+            $this->generateUrl(
+                'app_logout'
+            )
         );
     }
 }
