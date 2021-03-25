@@ -42,13 +42,13 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="Cascade")
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="Cascade")
      */
     private $user;
 
