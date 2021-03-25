@@ -29,7 +29,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->get('Remove')
-                 ->isSubmitted()) {
+                 ->isClicked()) {
             return $this->redirect(
                 $this->generateUrl(
                     'user_delete',
@@ -40,9 +40,8 @@ class UserController extends AbstractController
                 )
             );
         }
-
         if ($form->get('Update')
-                 ->isSubmitted()) {
+                 ->isClicked()) {
             $userToUpdate = $form->getData();
 
             $user->setUsername($userToUpdate->getUsername());
