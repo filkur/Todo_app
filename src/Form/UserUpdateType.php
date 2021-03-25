@@ -55,16 +55,6 @@ class UserUpdateType extends AbstractType
                     ],
                 ]
             )
-            ->add(
-                'Remove',
-                SubmitType::class,
-                [
-                    'label' => 'Remove',
-                    'attr' => [
-                        'class' => 'btn btn-danger',
-                    ],
-                ]
-            )
         ;;
     }
 

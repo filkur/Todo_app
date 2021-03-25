@@ -28,20 +28,7 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->get('Remove')
-                 ->isClicked()) {
-            return $this->redirect(
-                $this->generateUrl(
-                    'user_delete',
-                    [
-                        'id' => $this->getUser()
-                                     ->getId(),
-                    ]
-                )
-            );
-        }
-        if ($form->get('Update')
-                 ->isClicked()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $userToUpdate = $form->getData();
 
             $user->setUsername($userToUpdate->getUsername());
