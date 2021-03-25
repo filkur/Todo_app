@@ -49,6 +49,7 @@ class UserUpdateType extends AbstractType
                 'Update',
                 SubmitType::class,
                 [
+                    'label' => 'Update',
                     'attr' => [
                         'class' => 'btn btn-warning',
                     ],
@@ -58,6 +59,7 @@ class UserUpdateType extends AbstractType
                 'Remove',
                 SubmitType::class,
                 [
+                    'label' => 'Remove',
                     'attr' => [
                         'class' => 'btn btn-danger',
                     ],
