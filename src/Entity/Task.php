@@ -6,6 +6,8 @@ namespace App\Entity;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator as TaskAssert;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -43,6 +45,7 @@ class Task
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false, onDelete="Cascade")
+     * @Assert\NotBlank(message="You didn't create a category yet.")
      */
     private $category;
 
