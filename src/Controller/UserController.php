@@ -82,6 +82,7 @@ class UserController extends AbstractController
             'Profile removed. We will miss you...'
         );
 
+
         return $this->redirect(
             $this->generateUrl(
                 'app_logout'
