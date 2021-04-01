@@ -5,20 +5,30 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\UserUpdateType;
+use App\Services\UserUpdate\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route ("/profile", name="user_")
  */
 class UserController extends AbstractController
 {
+    private $encoderFactory;
+    public function __construct( EncoderFactoryInterface $encoderFactory)
+    {
+        $this->encoderFactory = $encoderFactory;
+    }
+
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update(User $user, Request $request): Response
+    public function update(User $user, Request $request, Security $security): Response
     {
         $em = $this->getDoctrine()
                    ->getManager()
@@ -31,17 +41,30 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userToUpdate = $form->getData();
 
-            $user->setUsername($userToUpdate->getUsername());
-            $user->setEmail($userToUpdate->getEmail());
+            $encoder = $this->encoderFactory->getEncoder($security->getUser());
 
-            $em->flush();
-            $this->addFlash('success', 'Profile updated!');
 
-            return $this->redirect(
-                $this->generateUrl(
-                    'category_index'
-                )
-            );
+           $encodedPassword = $encoder->encodePassword($userToUpdate->getPassword(), $security->getUser()->getSalt());
+           $encodedPassword = implode((array)$encodedPassword);
+            echo $encodedPassword;
+            echo '</br>';
+            echo $user->getPassword();
+            //if ($this->passwordEncoder->encodePassword($user ,$password) == $user->getPassword())
+            if ($encoder->isPasswordValid($security->getUser()->getPassword(), $user->getPassword(), $security->getUser()->getSalt()))
+            {
+                $user->setUsername($userToUpdate->getUsername());
+                $user->setEmail($userToUpdate->getEmail());
+
+                $em->flush();
+                $this->addFlash('success', 'Profile updated!');
+
+                return $this->redirect(
+                    $this->generateUrl(
+                        'category_index'
+                    )
+                );
+            }
+
         }
 
         return $this->render(
