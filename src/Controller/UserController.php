@@ -19,10 +19,10 @@ use Symfony\Component\Security\Core\Security;
  */
 class UserController extends AbstractController
 {
-    private $encoderFactory;
-    public function __construct( EncoderFactoryInterface $encoderFactory)
+    private  $passwordEncoder;
+    public function __construct( UserPasswordEncoderInterface $userPasswordEncoder)
     {
-        $this->encoderFactory = $encoderFactory;
+        $this->passwordEncoder = $userPasswordEncoder;
     }
 
     /**
@@ -41,16 +41,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userToUpdate = $form->getData();
 
-            $encoder = $this->encoderFactory->getEncoder($security->getUser());
 
-
-           $encodedPassword = $encoder->encodePassword($userToUpdate->getPassword(), $security->getUser()->getSalt());
-           $encodedPassword = implode((array)$encodedPassword);
-            echo $encodedPassword;
-            echo '</br>';
-            echo $user->getPassword();
-            //if ($this->passwordEncoder->encodePassword($user ,$password) == $user->getPassword())
-            if ($encoder->isPasswordValid($security->getUser()->getPassword(), $user->getPassword(), $security->getUser()->getSalt()))
+            if ($this->passwordEncoder->isPasswordValid($user, $userToUpdate->getPassword()))
             {
                 $user->setUsername($userToUpdate->getUsername());
                 $user->setEmail($userToUpdate->getEmail());
