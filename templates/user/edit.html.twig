@@ -3,7 +3,15 @@
 {% block title %}Todo-app! {% endblock %}
 
 {% block body %}
+
     <div class="container" style="margin-top: 50px;">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         {{ form(form) }}
         <a class="btn btn-danger btn-md mb-4" href="{{ path('user_delete', {id: app.user.id})}}">Remove</a>
     </div>

@@ -56,6 +56,9 @@ class UserController extends AbstractController
                     )
                 );
             }
+            else{
+                $this->addFlash('error', 'Wrong Password!');
+            }
 
         }
 
