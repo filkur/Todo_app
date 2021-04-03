@@ -2,55 +2,64 @@
 
 {% block title %}Log in!{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('css/loginPage.css') }}" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+
 {% block body %}
 
-
     <div class="container">
-        <article>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <header style="margin-top: 50px; margin-bottom: 30px;">
-                    <div class="alert alert-info">
-                        You are already logged in
-                    </div>
-                </header>
-            {% else %}
-                <header style="margin-top: 50px; margin-bottom: 30px;">
-                    <h1>Hi! Nice to see you again!</h1>
-                </header>
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <!-- Tabs Titles -->
+
+                <!-- Icon -->
+                <div class="fadeIn first">
+                    <img src="{{ asset('/images/logo2.png') }}" id="icon" alt="User Icon"/>
+                </div>
 
                 <form method="post">
+                    <!-- Login Form -->
+                    <form>
+                        {% if error %}
+                            <div
+                                class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
 
-                    {% if error %}
-                        <div
-                            class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+                        {% if app.user %}
+                            <div class="mb-3">
+                                You are logged in as {{ app.user.username }}, <a
+                                    href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
 
-                    {% if app.user %}
-                        <div class="mb-3">
-                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                        </div>
-                    {% endif %}
+                        <input type="text" id="inputUsername" class="fadeIn second" name="username"
+                               value="{{ last_username }}" placeholder="Username" required autofocus>
+                        <input type="text" id="inputPassword" class="fadeIn third" name="password"
+                               placeholder="password" class="form-control" required>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+                        <input type="submit" class="fadeIn fourth" value="Log In">
 
-                    <label for="inputUsername">Username</label>
-                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
-                           class="form-control" required autofocus>
-                    <label for="inputPassword">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    </form>
 
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                    >
-
-                    <button class="btn btn-md btn-primary mt-4" type="submit">
-                        Sign in
-                    </button>
+                    <!-- Remind Passowrd -->
+                    <div id="formFooter">
+                        <a class="underlineHover" href="{{ path('app_forgot_password_request') }}">Forgot Password?</a>
+                    </div>
                 </form>
-                <a href="{{ path('app_forgot_password_request') }}">Forgot password? Click here!</a>
-            {% endif %}
-        </article>
+            </div>
+        </div>
 
     </div>
-
 
 
     {#
