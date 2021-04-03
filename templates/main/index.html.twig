@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {#{{ encore_entry_link_tags('app') }}#}
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/images/fontello-a4f3b1e1/fontello-a4f3b1e1/css/fontello.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
@@ -29,5 +30,80 @@
 
     </div>
 
+    <div class="container">
 
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">A task manager you can <span class="text-muted">trust.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="{{ asset('/images/logo2.png') }}" alt="Generic placeholder image">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">achieve goals quickly with an efficient  <span class="text-muted">organization.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="featurette-image img-fluid mx-auto" src="{{ asset('/images/logo2.png') }}" alt="Generic placeholder image">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Does the project stand still? we provide <span class="text-muted">motivation.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="{{ asset('/images/logo2.png') }}" alt="Generic placeholder image">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+    </div>
+
+    <footer class="bg-dark text-center text-white ">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-1">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating " href="#" role="button"
+                ><i class="icon-facebook"></i
+                    ></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+                ><i class="icon-instagram"></i
+                    ></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+                ><i class="icon-linkedin"></i
+                    ></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+                ><i class="icon-github-circled"></i
+                    ></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright: ToDoApp.com
+        </div>
+        <!-- Copyright -->
+    </footer>
 {% endblock %}
