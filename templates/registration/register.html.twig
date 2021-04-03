@@ -2,36 +2,55 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('css/loginPage.css') }}" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+
 {% block body %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <div class="container">
 
-        <article>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <header style="margin-top: 50px; margin-bottom: 30px;">
-                <div class="alert alert-info">
-                    You are already logged in
-                </div>
-            </header>
-            {% else %}
-            <header style="margin-top: 50px; margin-bottom: 30px;">
-                <h1>Join to us!</h1>
-            </header>
-            {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.username) }}
-            {{ form_row(registrationForm.password, {
-                label: 'Password'
-            }) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+<div class="container">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
 
-            <button type="submit" class="btn btn-warning">Register</button>
-            {{ form_end(registrationForm) }}
-        </article>
-        {% endif %}
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="{{ asset('/images/register.jpg') }}" id="icon" alt="User Icon"/>
+            </div>
+
+                <!-- Register Form -->
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <header style="margin-top: 50px; margin-bottom: 30px;">
+                        <div class="alert alert-info">
+                            You are already logged in
+                        </div>
+                    </header>
+                    {% else %}
+
+                    {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.username) }}
+                    {{ form_row(registrationForm.password, {
+                        label: 'Password'
+                    }) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+                    <input type="submit" class="fadeIn fourth" value="Log In">
+                    {{ form_end(registrationForm) }}
+
+                {% endif %}
+        </div>
     </div>
+</div>
 
 {% endblock %}
