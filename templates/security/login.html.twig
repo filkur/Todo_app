@@ -5,7 +5,6 @@
 {% block stylesheets %}
     <link href="{{ asset('css/loginPage.css') }}" rel="stylesheet"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
 {% endblock %}
 
 {% block scripts %}
@@ -42,8 +41,8 @@
 
                         <input type="text" id="inputUsername" class="fadeIn second" name="username"
                                value="{{ last_username }}" placeholder="Username" required autofocus>
-                        <input type="text" id="inputPassword" class="fadeIn third" name="password"
-                               placeholder="password" class="form-control" required>
+                        <input type="password" id="registration_form_password_first" class="fadeIn third" name="password"
+                               placeholder="password" required>
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}"
                         >
