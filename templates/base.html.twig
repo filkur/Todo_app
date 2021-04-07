@@ -18,44 +18,47 @@
         {% endblock %}
     </head>
     <body class="bg-muted">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="{{ path('main') }}" style="font-style: italic; font-weight: 700; font-size: 30px;" >ToDoApp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-            </ul>
-            <ul class="navbar-nav">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li class="nav-item active">
-                        <a class="nav-link" style="margin-top: -2.5px;" href="{{ path('user_edit', {id: app.user.id}) }}">Profile <span class="sr-only">(current)</span></a>
-                    </li><li class="nav-item active">
+    <nav class="navbar navbar-expand-md navbar-light p-3 px-md-4 mb-3" style="background: wheat;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('main') }}" style="font-style: italic; font-weight: 700; font-size: 30px; color: darkorange" ><img src="{{ asset('/images/logo2.png') }}" style="width: 60px;" height="60px;" alt="logo">ToDoApp!</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <ul class="navbar-nav">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item active">
+                            <a class="nav-link" style="margin-top: -2.5px;" href="{{ path('user_edit', {id: app.user.id}) }}">Profile <span class="sr-only">(current)</span></a>
+                        </li><li class="nav-item active">
                         <a class="nav-link" style="margin-top: -2.5px;" href="{{ path('category_index') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                <li class="nav-item mr-3">
-                    <a class="btn btn-light btn-md" href="{{ path('task_create_task') }}">New task!</a>
-                </li>
-                    <li class="nav-item mr-3">
-                    <a class="btn btn-primary btn-md" href="{{ path('app_logout') }}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item mr-3">
-                    <a class="btn btn-primary btn-md" href="{{ path('app_login') }}">Log in</a>
-                </li>
-                <li class="nav-item mr-3">
-                    <a class="btn btn-warning btn-md" href="{{ path('app_register') }}">Sign up</a>
-                </li>
-                {% endif %}
-            </ul>
+                        <li class="nav-item mr-3">
+                            <a class="btn btn-light btn-md" href="{{ path('task_create_task') }}">New task!</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="btn btn-primary btn-md" href="{{ path('app_logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item mr-3">
+                            <a class="btn btn-primary btn-md" href="{{ path('app_login') }}">Log in</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="btn btn-warning btn-md" href="{{ path('app_register') }}">Sign up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
+
     </nav>
         {% block body %}{% endblock %}
-    <footer class="bg-light fixed-bottom text-center text-lg-start">
+    <footer class="bg-dark text-white  fixed-bottom text-center text-lg-start">
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2021 Copyright:
-            <a class="text-dark" href="https://mdbootstrap.com/">Todo.com</a>
+            © 2021 Copyright: ToDoApp.com
         </div>
         <!-- Copyright -->
     </footer>
