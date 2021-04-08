@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Repository\TaskRepository;
+use App\Services\Category\UserCategories;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,14 +28,9 @@ class CategoryController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository, UserCategories $userCategories): Response
     {
-        $user = $this->get('security.token_storage')
-                     ->getToken()
-                     ->getUser()
-        ;
-        $userId = $user->getId();
-        $categories = $categoryRepository->findByUserId($userId);
+        $categories = $userCategories->getCategories();
 
         return $this->render(
             'category/index.html.twig',
@@ -47,8 +43,10 @@ class CategoryController extends AbstractController
     /**
      * @Route("/create", name="create_category")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, UserCategories $userCategories): Response
     {
+        $categories = $userCategories->getCategories();
+
         $category = new Category();
 
         $form = $this->createForm(CategoryType::class, $category);
@@ -72,6 +70,7 @@ class CategoryController extends AbstractController
             'category/create.html.twig',
             [
                 'form' => $form->createView(),
+                'categories' => $categories,
             ]
         );
     }
@@ -79,8 +78,10 @@ class CategoryController extends AbstractController
     /**
      * @Route ("/show/{id}", name="show")
      */
-    public function show(Category $category, TaskRepository $taskRepository): Response
+    public function show(Category $category, TaskRepository $taskRepository, UserCategories $userCategories ): Response
     {
+        $categories = $userCategories->getCategories();
+
         $categoryId = $category->getId();
 
         $user = $this->get('security.token_storage')
@@ -100,6 +101,7 @@ class CategoryController extends AbstractController
                 'category' => $category,
                 'tasks'    => $tasks,
                 'user'     => $user,
+                'categories' => $categories
             ]
         );
     }

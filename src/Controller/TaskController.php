@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use App\Services\Category\UserCategories;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,8 +25,10 @@ class TaskController extends AbstractController
     /**
      * @Route("/create", name="create_task")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, UserCategories $userCategories): Response
     {
+        $categories = $userCategories->getCategories();
+
         $task = new Task();
 
         $form = $this->createForm(TaskType::class, $task);
@@ -50,6 +53,7 @@ class TaskController extends AbstractController
             'task/create.html.twig',
             [
                 'form' => $form->createView(),
+                'categories' => $categories,
             ]
         );
     }
@@ -57,8 +61,9 @@ class TaskController extends AbstractController
     /**
      * @Route ("/show/{id}", name="show")
      */
-    public function show(Task $task, TaskRepository $taskRepository, Request $request): Response
+    public function show(Task $task, TaskRepository $taskRepository, Request $request, UserCategories $userCategories): Response
     {
+        $categories= $userCategories->getCategories();
         $isDone = $task->isDone();
         if ($isDone) {
             $form = $this->createFormBuilder()
@@ -109,6 +114,7 @@ class TaskController extends AbstractController
                     [
                         'id' => $task->getCategory()
                                      ->getId(),
+                        'categories' => $categories,
                     ]
                 )
             );
@@ -119,6 +125,7 @@ class TaskController extends AbstractController
             [
                 'task' => $task,
                 'form' => $form->createView(),
+                'categories' => $categories,
             ]
         );
     }
@@ -149,8 +156,9 @@ class TaskController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update(Task $task, Request $request): Response
+    public function update(Task $task, Request $request, UserCategories $userCategories): Response
     {
+        $categories = $userCategories->getCategories();
         $em = $this->getDoctrine()
                    ->getManager()
         ;
@@ -180,6 +188,7 @@ class TaskController extends AbstractController
             'task/edit.html.twig',
             [
                 'form' => $form->createView(),
+                'categories' => $categories,
             ]
         );
     }

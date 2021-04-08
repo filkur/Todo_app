@@ -22,29 +22,42 @@
 
         <div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header" >
+            <nav id="sidebar" style="background: wheat;">
+                <div class="sidebar-header" style="background: wheat">
                     <img src="{{ asset('/images/logo2.png') }}" style="width: 100px;" alt="logo">
                 </div>
-
-                <ul class="list-unstyled components">
+                <hr>
+                <ul class="list-unstyled components" style="border-bottom-color: wheat">
                     <p><a href="{{ path('main') }}">User: {{ app.user.username }}</a></p>
+                    <hr>
                     <li>
                         <a href="{{ path('category_index') }}">Home</a>
                     </li>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="background-color: wheat;">Categories</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
 
+                            {% for category in categories %}
+                                    <li>
+                                        <a href="{{ path('category_show', {id: category.id}) }}" style="background: wheat;">
+                                            {{ category.name }}
+                                        </a>
+                                    </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                     <li>
                         <a href="{{ path('user_edit', {id: app.user.id}) }}">Profile</a>
                     </li>
 
                 </ul>
 
-                <ul class="list-unstyled CTAs">
+                <ul class="list-unstyled CTAs" style="background: wheat;  ">
                     <li>
-                        <a class="btn btn-light btn-md" href="{{ path('task_create_task') }}">New task!</a>
+                        <a class="btn btn-secondary btn-md" href="{{ path('task_create_task') }}">New task!</a>
                     </li>
-                    <li>
-                        <a class="btn btn-primary btn-md" href="{{ path('app_logout') }}">Logout</a>
+                    <li style="margin-top: 20px;">
+                        <a class="btn btn-warning btn-md" href="{{ path('app_logout') }}">Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -55,7 +68,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
 
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <button type="button" id="sidebarCollapse" class="btn btn-warning">
                             <i class="fas fa-align-left"></i>
                         </button>
                         <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,9 +77,10 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Page</a>
-                                </li>
+                                <form class="form-inline">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+                                </form>
                             </ul>
                         </div>
                     </div>

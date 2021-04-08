@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\UserUpdateType;
+use App\Services\Category\UserCategories;
 use App\Services\UserUpdate\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +29,10 @@ class UserController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update(User $user, Request $request, Security $security): Response
+    public function update(User $user, Request $request, UserCategories $userCategories): Response
     {
+        $categories = $userCategories->getCategories();
+
         $em = $this->getDoctrine()
                    ->getManager()
         ;
@@ -66,6 +69,7 @@ class UserController extends AbstractController
             'user/edit.html.twig',
             [
                 'form' => $form->createView(),
+                'categories' => $categories,
             ]
         );
     }
