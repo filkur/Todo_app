@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
+use App\Services\File\FileUploader;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,8 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         LoginFormAuthenticator $authenticator,
-        GuardAuthenticatorHandler $guardHandler
+        GuardAuthenticatorHandler $guardHandler,
+        FileUploader $fileUploader
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -41,11 +44,9 @@ class RegistrationController extends AbstractController
             $file = $form->get('image')
                          ->getData()
             ;
-            $filename = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move(
-                $this->getParameter('uploads_dir'),
-                $filename
-            );
+
+            $filename = $fileUploader->uploadFile($file);
+
             $user->setImage($filename);
 
             $entityManager = $this->getDoctrine()

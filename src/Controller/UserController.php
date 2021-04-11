@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\UserUpdateType;
 use App\Services\Category\UserCategories;
+use App\Services\File\FileUploader;
 use App\Services\UserUpdate\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +21,9 @@ use Symfony\Component\Security\Core\Security;
  */
 class UserController extends AbstractController
 {
-    private  $passwordEncoder;
-    public function __construct( UserPasswordEncoderInterface $userPasswordEncoder)
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $this->passwordEncoder = $userPasswordEncoder;
     }
@@ -29,8 +31,12 @@ class UserController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function update(User $user, Request $request, UserCategories $userCategories): Response
-    {
+    public function update(
+        User $user,
+        Request $request,
+        UserCategories $userCategories,
+        FileUploader $fileUploader
+    ): Response {
         $categories = $userCategories->getCategories();
 
         $em = $this->getDoctrine()
@@ -44,11 +50,16 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userToUpdate = $form->getData();
 
-
-            if ($this->passwordEncoder->isPasswordValid($user, $userToUpdate->getPassword()))
-            {
+            if ($this->passwordEncoder->isPasswordValid($user, $userToUpdate->getPassword())) {
                 $user->setUsername($userToUpdate->getUsername());
                 $user->setEmail($userToUpdate->getEmail());
+
+                $file = $form->get('image')
+                             ->getData()
+                ;
+                $filename = $fileUploader->uploadFile($file);
+
+                $user->setImage($filename);
 
                 $em->flush();
                 $this->addFlash('success', 'Profile updated!');
@@ -58,11 +69,9 @@ class UserController extends AbstractController
                         'category_index'
                     )
                 );
-            }
-            else{
+            } else {
                 $this->addFlash('error', 'Wrong Password!');
             }
-
         }
 
         return $this->render(
@@ -88,7 +97,6 @@ class UserController extends AbstractController
             'success',
             'Profile removed. We will miss you...'
         );
-
 
         return $this->redirect(
             $this->generateUrl(
