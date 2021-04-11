@@ -19,28 +19,29 @@
     {% endfor %}
 
 
-<div class="container">
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
+    <div class="container">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <!-- Tabs Titles -->
 
-            <!-- Icon -->
-            <div class="fadeIn first">
-                <img src="{{ asset('/images/register.jpg') }}" id="icon" alt="User Icon"/>
-            </div>
+                <!-- Icon -->
+                <div class="fadeIn first">
+                    <img src="{{ asset('/images/register.jpg') }}" id="icon" alt="User Icon"/>
+                </div>
 
                 <!-- Register Form -->
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <header style="margin-top: 50px; margin-bottom: 30px;">
                         <div class="alert alert-info">
                             You are already logged in
                         </div>
                     </header>
-                    {% else %}
+                {% else %}
 
                     {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm.email) }}
                     {{ form_row(registrationForm.username) }}
+                    {{ form_row(registrationForm.image) }}
                     {{ form_row(registrationForm.password, {
                         label: 'Password'
                     }) }}
@@ -49,8 +50,8 @@
                     {{ form_end(registrationForm) }}
 
                 {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
