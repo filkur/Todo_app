@@ -36,8 +36,17 @@ class RegistrationController extends AbstractController
                     $form->get('password')
                          ->getData()
                 )
-            )
+            );
+
+            $file = $form->get('image')
+                         ->getData()
             ;
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('uploads_dir'),
+                $filename
+            );
+            $user->setImage($filename);
 
             $entityManager = $this->getDoctrine()
                                   ->getManager()

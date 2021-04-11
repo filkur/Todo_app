@@ -73,6 +73,11 @@ class User implements UserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $image;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -211,6 +216,18 @@ class User implements UserInterface
                 $category->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
