@@ -22,28 +22,31 @@
 
         <div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar" style="background: wheat;">
+            <nav id="sidebar" style="background: wheat; color: #666666;">
                 <div class="sidebar-header" style="background: wheat">
                     <img src="{{ asset('/images/logo2.png') }}" style="width: 100px;" alt="logo">
                 </div>
                 <hr>
-                <ul class="list-unstyled components" style="border-bottom-color: wheat">
-                    <p><a href="{{ path('main') }}">User: {{ app.user.username }}</a></p>
+                <ul class="list-unstyled components" style="border-bottom-color: wheat;" >
+                    <p><a href="{{ path('main') }}" style="color: #666666">User: {{ app.user.username }}</a></p>
                     <hr>
                     <li>
                         <a href="{{ path('category_index') }}">Home</a>
                     </li>
                     <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="background-color: wheat;">Categories</a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="background-color: wheat; color: #666666;">Categories</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
-
-                            {% for category in categories %}
-                                    <li>
-                                        <a href="{{ path('category_show', {id: category.id}) }}" style="background: wheat;">
-                                            {{ category.name }}
-                                        </a>
-                                    </li>
-                            {% endfor %}
+                            {% if categories is empty %}
+                                <li style="margin-left: 20px;">Empty here!</li>
+                            {% else %}
+                                {% for category in categories %}
+                                        <li>
+                                            <a href="{{ path('category_show', {id: category.id}) }}" style="background: wheat;">
+                                                {{ category.name }}
+                                            </a>
+                                        </li>
+                                {% endfor %}
+                            {% endif %}
                         </ul>
                     </li>
                     <li>
