@@ -84,7 +84,7 @@
                 <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <img src="{{ asset('/images/profile/avatar.jpg') }}" style="width: 60px" class="rounded-circle" alt="profile-img">
+                            <a href="{{ path('user_edit', {id: app.user.id}) }}"><img src="{{ asset('/images/profile/avatar.jpg') }}" style="width: 60px" class="rounded-circle" alt="profile-img"> </a>
                         </li>
                         <li class="nav-item" style="margin-top: auto; margin-bottom: auto;">
                             <div id="username">{{ app.user.username }}</div>
