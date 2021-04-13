@@ -12,17 +12,21 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        <div class="content">
-            <header><h1>You're data</h1></header>
-            <p>Username: {{ app.user.username }}</p>
-            <p>Email: {{ app.user.email }}</p>
-            <p>Profile image: {{ app.user.image }}</p>
+        <div class="row">
+            <div class="col-sm">
+                <p><h5>Username: {{ app.user.username }} </h5></p>
+                <p style="margin-top: 50px;"><h5>Email: {{ app.user.email }} </h5></p>
+                <button style="margin-top: 50px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                    Remove account
+                </button>
+
+            </div>
+            <div class="col-sm">
+                <p><h5>Profile image:</h5></p>
+                <img src="{{ asset('images/profile/' ~ app.user.image) }}" style="width: 300px" alt="profile-image">
+            </div>
 
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
-            Remove account
-        </button>
     </div>
 
     <!-- Modals -->
