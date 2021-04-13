@@ -149,11 +149,9 @@ class UserController extends AbstractController
         //byq uzyj switcha
 
         $formUsername->handleRequest($request);
-
         if ($formUsername->isSubmitted() && $formUsername ->isValid()){
             $fieldToUpdate = $formUsername->getData();
             $user->setUsername($fieldToUpdate->getUsername());
-            $em->flush();
             $em->flush();
             $this->addFlash('success', 'Profile updated!');
 
