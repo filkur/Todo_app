@@ -29,6 +29,24 @@
       "css": "github-circled",
       "code": 61595,
       "src": "fontawesome"
+    },
+    {
+      "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
+      "css": "pencil",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "cad619ef78a5500c1e5b3d021d2fdd65",
+      "css": "trash",
+      "code": 59453,
+      "src": "maki"
+    },
+    {
+      "uid": "6083c8aa5e3345476a24a28ac1afaa61",
+      "css": "cog",
+      "code": 59393,
+      "src": "elusive"
     }
   ]
 }

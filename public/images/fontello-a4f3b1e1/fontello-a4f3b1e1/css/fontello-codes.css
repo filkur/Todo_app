@@ -1,4 +1,7 @@
 
+.icon-pencil:before { content: '\e800'; } /* '' */
+.icon-cog:before { content: '\e801'; } /* '' */
+.icon-trash:before { content: '\e83d'; } /* '' */
 .icon-facebook:before { content: '\f09a'; } /* '' */
 .icon-github-circled:before { content: '\f09b'; } /* '' */
 .icon-linkedin:before { content: '\f0e1'; } /* '' */
