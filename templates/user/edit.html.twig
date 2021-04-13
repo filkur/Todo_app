@@ -14,22 +14,28 @@
         {% endfor %}
         <div class="row">
             <div class="col-sm">
-                <p><h5>Username: {{ app.user.username }} </h5></p>
-                <p style="margin-top: 50px;"><h5>Email: {{ app.user.email }} </h5></p>
+                <p><h5>Username: {{ app.user.username }} <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUsername">
+                        <i class="icon-pencil"></i>
+                    </button> </h5></p>
+                <p style="margin-top: 50px;"><h5>Email: {{ app.user.email }} <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editEmail">
+                        <i class="icon-pencil"></i>
+                    </button></h5></p>
                 <button style="margin-top: 50px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
                     Remove account
                 </button>
 
             </div>
             <div class="col-sm">
-                <p><h5>Profile image:</h5></p>
+                <p><h5>Profile image: <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editImage">
+                        <i class="icon-pencil"></i>
+                    </button></h5></p>
                 <img src="{{ asset('images/profile/' ~ app.user.image) }}" style="width: 300px" alt="profile-image">
             </div>
 
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- Delete modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -45,6 +51,55 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-danger btn-md" href="{{ path('user_delete', {id: app.user.id})}}">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Username edit modal -->
+    <div class="modal fade" id="editUsername" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{form(formUsername)}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- email edit modal -->
+    <div class="modal fade" id="editEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{form(formEmail)}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Username edit modal -->
+    <div class="modal fade" id="editImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{form(formImage)}}
                 </div>
             </div>
         </div>
