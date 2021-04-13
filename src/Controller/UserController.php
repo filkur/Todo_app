@@ -9,6 +9,10 @@ use App\Services\Category\UserCategories;
 use App\Services\File\FileUploader;
 use App\Services\UserUpdate\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +47,74 @@ class UserController extends AbstractController
                    ->getManager()
         ;
 
+        $formUsername = $this->createFormBuilder($user)
+                             ->add(
+                                 'username',
+                                 TextType::class,
+                                 [
+                                     'label' => 'Username',
+                                     'attr'  => [
+                                         'placeholder' => $user->getUsername(),
+                                     ],
+                                 ]
+                             )
+                             ->add(
+                                 'Update',
+                                 SubmitType::class,
+                                 [
+                                     'label' => 'Update',
+                                     'attr'  => [
+                                         'class' => 'btn btn-warning',
+                                     ],
+                                 ]
+                             )
+                             ->getForm()
+        ;
+        $formEmail = $this->createFormBuilder($user)
+                          ->add(
+                              'email',
+                              EmailType::class,
+                              [
+                                  'label' => 'Email',
+                                  'attr'  => [
+                                      'placeholder' => $user->getEmail(),
+                                  ],
+                              ]
+                          )
+                          ->add(
+                              'Update',
+                              SubmitType::class,
+                              [
+                                  'label' => 'Update',
+                                  'attr'  => [
+                                      'class' => 'btn btn-warning',
+                                  ],
+                              ]
+                          )
+                          ->getForm()
+        ;
+        $formImage = $this->createFormBuilder($user)
+                             ->add(
+                                 'image',
+                                 FileType::class,
+                                 [
+                                     'mapped' => false,
+                                 ]
+                             )
+                             ->add(
+                                 'Update',
+                                 SubmitType::class,
+                                 [
+                                     'label' => 'Update',
+                                     'attr'  => [
+                                         'class' => 'btn btn-warning',
+                                     ],
+                                 ]
+                             )
+                             ->getForm()
+        ;
+
+        /*
         $form = $this->createForm(UserUpdateType::class);
 
         $form->handleRequest($request);
@@ -73,12 +145,32 @@ class UserController extends AbstractController
                 $this->addFlash('error', 'Wrong Password!');
             }
         }
+        */
+        //byq uzyj switcha
 
+        $formUsername->handleRequest($request);
+
+        if ($formUsername->isSubmitted() && $formUsername ->isValid()){
+            $fieldToUpdate = $formUsername->getData();
+            $user->setUsername($fieldToUpdate->getUsername());
+            $em->flush();
+            $em->flush();
+            $this->addFlash('success', 'Profile updated!');
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'category_index'
+                )
+            );
+        }
         return $this->render(
             'user/edit.html.twig',
             [
-                'form' => $form->createView(),
-                'categories' => $categories,
+                //'form' => $form->createView(),
+                'formUsername' => $formUsername->createView(),
+                'formEmail' => $formEmail->createView(),
+                'formImage' => $formImage->createView(),
+                'categories'   => $categories,
             ]
         );
     }
