@@ -47,7 +47,8 @@ class UserController extends AbstractController
                    ->getManager()
         ;
 
-        $formUsername = $this->createFormBuilder($user)
+        $formUsername = $this->get("form.factory")
+                             ->createNamedBuilder('formUsername')
                              ->add(
                                  'username',
                                  TextType::class,
@@ -70,7 +71,8 @@ class UserController extends AbstractController
                              )
                              ->getForm()
         ;
-        $formEmail = $this->createFormBuilder($user)
+        $formEmail = $this->get("form.factory")
+                          ->createNamedBuilder('formEmail')
                           ->add(
                               'email',
                               EmailType::class,
@@ -93,46 +95,34 @@ class UserController extends AbstractController
                           )
                           ->getForm()
         ;
-        $formImage = $this->createFormBuilder($user)
-                             ->add(
-                                 'image',
-                                 FileType::class,
-                                 [
-                                     'mapped' => false,
-                                 ]
-                             )
-                             ->add(
-                                 'Update',
-                                 SubmitType::class,
-                                 [
-                                     'label' => 'Update',
-                                     'attr'  => [
-                                         'class' => 'btn btn-warning',
-                                     ],
-                                 ]
-                             )
-                             ->getForm()
+        $formImage = $this->get("form.factory")
+                          ->createNamedBuilder('formImage')
+                          ->add(
+                              'image',
+                              FileType::class,
+                              [
+                                  'mapped' => false,
+                              ]
+                          )
+                          ->add(
+                              'Update',
+                              SubmitType::class,
+                              [
+                                  'label' => 'Update',
+                                  'attr'  => [
+                                      'class' => 'btn btn-warning',
+                                  ],
+                              ]
+                          )
+                          ->getForm()
         ;
 
-        /*
-        $form = $this->createForm(UserUpdateType::class);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userToUpdate = $form->getData();
-
-            if ($this->passwordEncoder->isPasswordValid($user, $userToUpdate->getPassword())) {
-                $user->setUsername($userToUpdate->getUsername());
-                $user->setEmail($userToUpdate->getEmail());
-
-                $file = $form->get('image')
-                             ->getData()
-                ;
-                $filename = $fileUploader->uploadFile($file);
-
-                $user->setImage($filename);
-
+        if ($request->request->has('formUsername')) {
+            $formUsername->handleRequest($request);
+            if ($formUsername->isSubmitted() && $formUsername->isValid()) {
+                $fieldToUpdate = $formUsername->getData();
+                $user->setUsername($fieldToUpdate['username']);
                 $em->flush();
                 $this->addFlash('success', 'Profile updated!');
 
@@ -141,33 +131,50 @@ class UserController extends AbstractController
                         'category_index'
                     )
                 );
-            } else {
-                $this->addFlash('error', 'Wrong Password!');
             }
         }
-        */
-        //byq uzyj switcha
+        if ($request->request->has('formEmail')) {
+            $formEmail->handleRequest($request);
+            if ($formEmail->isSubmitted() && $formEmail->isValid()) {
+                $fieldToUpdate = $formEmail->getData();
+                $user->setEmail($fieldToUpdate['email']);
+                $em->flush();
+                $this->addFlash('success', 'Profile updated!');
 
-        $formUsername->handleRequest($request);
-        if ($formUsername->isSubmitted() && $formUsername ->isValid()){
-            $fieldToUpdate = $formUsername->getData();
-            $user->setUsername($fieldToUpdate->getUsername());
-            $em->flush();
-            $this->addFlash('success', 'Profile updated!');
-
-            return $this->redirect(
-                $this->generateUrl(
-                    'category_index'
-                )
-            );
+                return $this->redirect(
+                    $this->generateUrl(
+                        'category_index'
+                    )
+                );
+            }
         }
+
+        if ($request->request->has('formImage')) {
+            $formImage->handleRequest($request);
+            if ($formImage->isSubmitted() && $formImage->isValid()) {
+                $file = $formImage->get('image')
+                                  ->getData()
+                ;
+                $filename = $fileUploader->uploadFile($file);
+                $user->setImage($filename);
+                $em->flush();
+                $this->addFlash('success', 'Profile updated!');
+
+                return $this->redirect(
+                    $this->generateUrl(
+                        'category_index'
+                    )
+                );
+            }
+        }
+
         return $this->render(
             'user/edit.html.twig',
             [
                 //'form' => $form->createView(),
                 'formUsername' => $formUsername->createView(),
-                'formEmail' => $formEmail->createView(),
-                'formImage' => $formImage->createView(),
+                'formEmail'    => $formEmail->createView(),
+                'formImage'    => $formImage->createView(),
                 'categories'   => $categories,
             ]
         );
