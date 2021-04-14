@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Task;
-use App\Form\TaskType;
+use App\Form\TaskFormType;
 use App\Repository\TaskRepository;
 use App\Services\Category\UserCategories;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +31,7 @@ class TaskController extends AbstractController
 
         $task = new Task();
 
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskFormType::class, $task);
 
         $form->handleRequest($request);
 
@@ -163,7 +163,7 @@ class TaskController extends AbstractController
                    ->getManager()
         ;
 
-        $form = $this->createForm(TaskType::class);
+        $form = $this->createForm(TaskFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $taskToUpdate = $form->getData();

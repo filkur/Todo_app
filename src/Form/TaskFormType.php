@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class TaskType extends AbstractType
+class TaskFormType extends AbstractType
 {
     private $categoryRepository;
 

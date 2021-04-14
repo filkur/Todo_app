@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Task;
 use App\Entity\User;
-use App\Form\CategoryType;
+use App\Form\CategoryFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\TaskRepository;
 use App\Services\Category\UserCategories;
@@ -49,7 +49,7 @@ class CategoryController extends AbstractController
 
         $category = new Category();
 
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(CategoryFormType::class, $category);
 
         $form->handleRequest($request);
 
