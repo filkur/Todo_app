@@ -14,10 +14,10 @@
         {% endfor %}
         <div class="row">
             <div class="col-sm">
-                <p><h5>Username: {{ app.user.username }} <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUsername">edit
+                <p><h5>Username: {{ app.user.username }} <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editUsername">
                         <i class="icon-pencil"></i>
                     </button> </h5></p>
-                <p style="margin-top: 50px;"><h5>Email: {{ app.user.email }} <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editEmail">edit
+                <p style="margin-top: 50px;"><h5>Email: <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editEmail">
                         <i class="icon-pencil"></i>
                     </button></h5></p>
                 <button style="margin-top: 50px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
@@ -26,7 +26,7 @@
 
             </div>
             <div class="col-sm">
-                <p><h5>Profile image: <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editImage">edit
+                <p><h5>Profile image: <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editImage">
                         <i class="icon-pencil"></i>
                     </button></h5></p>
                 <img src="{{ asset('images/profile/' ~ app.user.image) }}" style="width: 300px" alt="profile-image">
