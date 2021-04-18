@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EmailFormType;
+use App\Form\ImageFormType;
 use App\Form\RegistrationFormType;
+use App\Form\UsernameFormType;
 use App\Form\UserUpdateType;
 use App\Services\Category\UserCategories;
 use App\Services\File\FileUploader;
@@ -43,99 +46,22 @@ class UserController extends AbstractController
         FileUploader $fileUploader
     ): Response {
         $categories = $userCategories->getCategories();
-
         $em = $this->getDoctrine()
                    ->getManager()
         ;
+        $formFactory = $this->get('form.factory');
 
-        $formUsername = $this->get("form.factory")
-                             ->createNamedBuilder('formUsername')
-                             ->add(
-                                 'username',
-                                 TextType::class,
-                                 [
-                                     'label' => 'Username',
-                                     'attr'  => [
-                                         'placeholder' => $user->getUsername(),
-                                     ],
-                                 ]
-                             )
-                             ->add(
-                                 'password',
-                                 PasswordType::class
-                             )
-                             ->add(
-                                 'Update',
-                                 SubmitType::class,
-                                 [
-                                     'label' => 'Update',
-                                     'attr'  => [
-                                         'class' => 'btn btn-warning',
-                                     ],
-                                 ]
-                             )
-                             ->getForm()
-        ;
-        $formEmail = $this->get("form.factory")
-                          ->createNamedBuilder('formEmail')
-                          ->add(
-                              'email',
-                              EmailType::class,
-                              [
-                                  'label' => 'Email',
-                                  'attr'  => [
-                                      'placeholder' => $user->getEmail(),
-                                  ],
-                              ]
-                          )
-                          ->add(
-                              'password',
-                              PasswordType::class
-                          )
-                          ->add(
-                              'Update',
-                              SubmitType::class,
-                              [
-                                  'label' => 'Update',
-                                  'attr'  => [
-                                      'class' => 'btn btn-warning',
-                                  ],
-                              ]
-                          )
-                          ->getForm()
-        ;
-        $formImage = $this->get("form.factory")
-                          ->createNamedBuilder('formImage')
-                          ->add(
-                              'image',
-                              FileType::class,
-                              [
-                                  'mapped' => false,
-                              ]
-                          )
-                          ->add(
-                              'password',
-                              PasswordType::class
-                          )
-                          ->add(
-                              'Update',
-                              SubmitType::class,
-                              [
-                                  'label' => 'Update',
-                                  'attr'  => [
-                                      'class' => 'btn btn-warning',
-                                  ],
-                              ]
-                          )
-                          ->getForm()
-        ;
+        $formUsername = $formFactory->createNamed('formUsername', UsernameFormType::class);
+        $formEmail = $formFactory->createNamed('formEmail', EmailFormType::class);
+        $formImage = $formFactory->createNamed('formImage', ImageFormType::class);
 
         if ($request->request->has('formUsername')) {
             $formUsername->handleRequest($request);
+
             if ($formUsername->isSubmitted() && $formUsername->isValid()) {
                 $fieldToUpdate = $formUsername->getData();
-                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate['password'])) {
-                    $user->setUsername($fieldToUpdate['username']);
+                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate->getPassword())) {
+                    $user->setUsername($fieldToUpdate->getUsername());
                     $em->flush();
                     $this->addFlash('success', 'Profile updated!');
 
@@ -144,16 +70,17 @@ class UserController extends AbstractController
                             'category_index'
                         )
                     );
+                } else {
+                    $this->addFlash('warning', 'Wrong password!');
                 }
-                else $this->addFlash('warning', 'Wrong password!');
             }
         }
         if ($request->request->has('formEmail')) {
             $formEmail->handleRequest($request);
             if ($formEmail->isSubmitted() && $formEmail->isValid()) {
                 $fieldToUpdate = $formEmail->getData();
-                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate['password'])) {
-                    $user->setEmail($fieldToUpdate['email']);
+                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate->getPassword())) {
+                    $user->setEmail($fieldToUpdate->getEmail());
                     $em->flush();
                     $this->addFlash('success', 'Profile updated!');
 
@@ -162,8 +89,9 @@ class UserController extends AbstractController
                             'category_index'
                         )
                     );
+                } else {
+                    $this->addFlash('warning', 'Wrong password!');
                 }
-                else $this->addFlash('warning', 'Wrong password!');
             }
         }
 
@@ -171,7 +99,7 @@ class UserController extends AbstractController
             $formImage->handleRequest($request);
             if ($formImage->isSubmitted() && $formImage->isValid()) {
                 $fieldToUpdate = $formImage->getData();
-                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate['password'])) {
+                if ($this->passwordEncoder->isPasswordValid($user, $fieldToUpdate->getPassword())) {
                     $file = $formImage->get('image')
                                       ->getData()
                     ;
@@ -185,8 +113,9 @@ class UserController extends AbstractController
                             'category_index'
                         )
                     );
+                } else {
+                    $this->addFlash('warning', 'Wrong password!');
                 }
-                else $this->addFlash('warning', 'Wrong password!');
             }
         }
 
