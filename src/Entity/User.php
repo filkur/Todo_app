@@ -11,6 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use App\Validator\ImageExtension as ImageExtensionAssert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -75,6 +77,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @ImageExtensionAssert\ImageExtension
      */
     private $image;
 
