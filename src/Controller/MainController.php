@@ -24,4 +24,12 @@ class MainController extends AbstractController
     {
         return $this->render('main/features.html.twig');
     }
+
+    /**
+     * @Route ("/pricing", name="pricing")
+     */
+    public function showPricing():Response
+    {
+       return $this->render('main/pricing.html.twig');
+    }
 }
