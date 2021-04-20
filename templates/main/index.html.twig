@@ -12,11 +12,14 @@
             <a class="navbar-brand" href="{{ path('main') }}" style="font-style: italic; font-weight: 700; font-size: 30px; color: darkorange" ><img src="{{ asset('/images/logo2.png') }}" style="width: 60px;" height="60px;" alt="logo">ToDoApp!</a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <nav class="my-2 my-md-0 mr-md-3">
-                <a class="btn btn-primary btn-md mr-3" href="{{ path('category_index') }}">Back to service</a>
+                <a class="btn btn-info btn-md mr-3" href="{{ path('category_index') }}">Back to service</a>
             </nav>
             {% else %}
             <nav class="my-2 my-md-0 mr-md-3">
-                <a class="btn btn-primary btn-md mr-3" href="{{ path('app_login') }}">Log in</a>
+                <a class="navbar-brand text-light" href="{{ path('features') }}">Features</a>
+                <a class="navbar-brand text-light" href="#">Pricing</a>
+                <a class="navbar-brand text-light" href="#">Contact</a>
+                <a class="btn btn-info btn-md mr-3" href="{{ path('app_login') }}">Log in</a>
                 <a class="btn btn-warning btn-md" href="{{ path('app_register') }}">Sign up</a>
             </nav>
             {% endif %}
@@ -24,7 +27,7 @@
 
         <div class="container" style="margin-top: 20%; color: black">
             <article class="text-center">
-                <header class="mt-4 mb-4"><h1>Task management for today's workplace</h1></header>
+                <header class="mt-4 mb-4" style="font-size: 50px; font-weight: 700">Task management for today's workplace</header>
                 <p><h5>Do you have a lot of work and do not remember everything?</h5></p>
                 <p><h5>Do you want to relieve your brain and improve your performance?</h5></p>
                 <p><h4>Take advantage of our offer now and start with a better self-organization!</h4></p>

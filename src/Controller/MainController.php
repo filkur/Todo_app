@@ -16,4 +16,12 @@ class MainController extends AbstractController
     {
         return $this->render('main/index.html.twig');
     }
+
+    /**
+     * @Route ("/features", name="features")
+     */
+    public function showFeatures():Response
+    {
+        return $this->render('main/features.html.twig');
+    }
 }
