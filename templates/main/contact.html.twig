@@ -1,12 +1,11 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {#{{ encore_entry_link_tags('app') }}#}
-    <link href="{{ asset('css/features.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/images/fontello-a4f3b1e1/fontello-a4f3b1e1/css/fontello.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-    <div class="jumbotron big-banner">
+    <div class="jumbotron big-banner" style="background-color: white">
 
         <nav class="navbar fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3" style="background: rgba(0,0,0,0.4);">
             <a class="navbar-brand" href="{{ path('main') }}" style="font-style: italic; font-weight: 700; font-size: 30px; color: darkorange" ><img src="{{ asset('/images/logo2.png') }}" style="width: 60px;" height="60px;" alt="logo">ToDoApp!</a>
@@ -24,22 +23,34 @@
                 </nav>
             {% endif %}
         </nav>
-
-        <div class="container" style="margin-top: 20%; color: black">
-            <article class="text-center">
-                <header class="mt-4 mb-4" style="font-size: 50px; font-weight: 700">Do you feel chaos at work?</header>
-
-                <p><h5>Do you want to relieve your brain and improve your performance?</h5></p>
-                <p><h4>Take advantage of our offer now and start with a better self-organization!</h4></p>
-                <a class="btn btn-warning btn-lg mt-4" href="{{ path('app_register') }}">Get started ></a>
-
-            </article>
-        </div>
-
-
     </div>
 
-    <footer class="bg-dark text-center text-white ">
+    <div class="container contact-form">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div id="title" style="text-align: center">
+            <h1>Do you have any Questions?</h1>
+            <h5>Fell free to contact us</h5>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.from) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.message) }}
+
+            </div>
+        </div>
+        <div class="row"> {{ form_end(form) }}
+        </div>
+    </div>
+
+    <footer class="bg-dark fixed-bottom text-center text-white ">
         <!-- Grid container -->
         <div class="container p-4 pb-0">
             <!-- Section: Social media -->
