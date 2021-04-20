@@ -32,4 +32,12 @@ class MainController extends AbstractController
     {
        return $this->render('main/pricing.html.twig');
     }
+
+    /**
+     * @Route ("/contact", name="contact")
+     */
+    public function showContact():Response
+    {
+        return $this->render('main/contact.html.twig');
+    }
 }
